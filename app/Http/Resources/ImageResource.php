@@ -7,7 +7,5 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ImageResource extends BaseResource
 {
-    protected $attributes = [
-        'path'
-    ];
+    
 }

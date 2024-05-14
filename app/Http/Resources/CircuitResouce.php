@@ -5,11 +5,17 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use function PHPUnit\Framework\returnSelf;
+
 class CircuitResouce extends BaseResource
 {
     protected $attributes = [
         'name',
-        'id',
+        'alternative',
+        'description',
+        'audio',
+        'headpoint',
+        'zoom',
     ];
 
     /**
@@ -22,7 +28,7 @@ class CircuitResouce extends BaseResource
         return [
             ...parent::toArray($request),
             'path' => PathResource::collection($this->resource->paths),
-            'images' => ImageResource::collection($this->resource->images)
+            'images' => $this->resource->images->map(fn ($danon) => $danon->path)
         ];
     }
 }

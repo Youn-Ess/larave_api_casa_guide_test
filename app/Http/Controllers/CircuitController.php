@@ -16,7 +16,6 @@ class CircuitController extends Controller
         $circuits = Circuit::all();
         $building = Buildign::all();
         $circuit = Circuit::all();
-        // dd($circuit[0]);
         return view('welcome', compact('circuits', 'building', 'circuit'));
     }
 
