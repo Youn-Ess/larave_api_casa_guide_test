@@ -12,13 +12,17 @@ class CircuitResouce extends BaseResource
         'id',
     ];
 
-        /**
+    /**
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            ...parent::toArray($request),
+            'path' => PathResource::collection($this->resource->paths),
+            'images' => ImageResource::collection($this->resource->images)
+        ];
     }
 }

@@ -5,12 +5,9 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PathResource extends BaseResource
+class ImageResource extends BaseResource
 {
     protected $attributes = [
-        'latitude',
-        'longitude',
+        'path'
     ];
-
-    
 }
