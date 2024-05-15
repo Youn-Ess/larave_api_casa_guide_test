@@ -14,80 +14,93 @@
     </script> --}}
     <h2>map:::::</h2>
     <div id="map" style="width: 100%; height: 400px;"></div>
-    <button id="submit">submit</button>
+    <button id="submit">add circuit</button>
 
     <script type='text/javascript'
         src='https://maps.google.com/maps/api/js?language=en&key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&region=GB&libraries=directions'>
     </script>
 
+
     <script>
+        let markers = [];
+
         function initMap() {
+            let allCicruits = [];
+            const casablanca = {
+                lat: 33.57,
+                lng: -7.60
+            }
             const map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 8,
-                center: {
-                    lat: 33.57,
-                    lng: -7.60
-                },
+                center: casablanca,
+                mapTypeId: google.maps.MapTypeId.HYBRID
+            });
+
+
+            // poly line that displayed on red to show the poly line that the user is currentely creating it
+            let line = new google.maps.Polyline({
+                strokeColor: '#FF0000',
+                strokeWeight: 4,
+                map: map,
             });
 
             map.addListener('click', function(event) {
-                const clickLat = event.latLng.lat();
-                const clickLng = event.latLng.lng();
-                addMarker(map, clickLat, clickLng);
+                const marker = new google.maps.Marker({
+                    position: {
+                        lat: event.latLng.lat(),
+                        lng: event.latLng.lng()
+                    },
+                    map: map,
+                });
+                marker.addListener('click', function() {
+                    marker.setMap(null);
+                    markers = markers.filter(m => m !== marker);
+                    line.setPath(markers.map(marker => marker.getPosition()));
+                });
+                markers.push(marker);
+                line.setPath(markers.map(marker => marker.getPosition()));
             });
 
-            let flightPath = [{
-                    lat: 33.79865868853624,
-                    lng: -6.504663119465121
-                },
-                {
-                    lat: 33.67532025292561,
-                    lng: -6.768334994465121
-                },
-                {
-                    lat: 33.70724185962538,
-                    lng: -6.798461723666651
+            document.getElementById('submit').addEventListener('click', function() {
+                const markersOfPlyLine = markers.map(marker => marker.getPosition())
+                const polyLine = new google.maps.Polyline({
+                    path: markersOfPlyLine,
+                });
+
+                polyLine.setOptions({
+                    data: {
+                        name: prompt('name of Polyline'),
+                        description: prompt('description of Polyline')
+                    },
+                    strokeColor: '#00FF00',
+                    strokeWeight: 5,
+                    map: map
+                });
+
+                allCicruits.push(polyLine)
+                console.log(allCicruits);
+                markers.map(marker => marker.setMap(null))
+                markers = []
+                line.setPath(markers.map(marker => marker.getPosition()));
+                for (const polyLine of allCicruits) {
+
+                    polyLine.setOptions({
+                        path: polyline = polyLine.latLngs.Fg[0].Fg.map(path => {
+                            return {
+                                lat: path.lat(),
+                                lng: path.lng()
+                            }
+                        }),
+                    });
+
+                    polyLine.addListener('click', function() {
+                        console.log(polyLine.data);
+                    })
                 }
-            ];
 
-
-            let line = new google.maps.Polyline({
-                path: flightPath,
-                strokeColor: '#FF0000',
-                strokeWeight: 4,
-                map: map
-            });
-
+            })
         }
 
-        let markers = [];
-        let LatsLngs = []
-
-        function addMarker(map, lat, lng) {
-            const marker = new google.maps.Marker({
-                position: {
-                    lat: lat,
-                    lng: lng
-                },
-                map: map,
-                title: "Hello World!",
-            });
-
-            marker.addListener('click', function() {
-                marker.setMap(null);
-                markers = markers.filter(m => m !== marker);
-            });
-            markers.push(marker);
-        }
-
-        document.getElementById('submit').addEventListener('click', () => {
-            LatsLngs = markers.map(marker => {
-                return {
-                    lat: marker.position.lat(),
-                    lng: marker.position.lng()
-                }
-            });
-        });
 
         window.onload = initMap;
     </script>
