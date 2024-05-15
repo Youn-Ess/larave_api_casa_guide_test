@@ -21,6 +21,7 @@ class CircuitController extends Controller
 
     public function post(Request $request)
     {
+        // dd($request);
         request()->validate([
             'name' => 'required',
             'alternative' => 'required',
@@ -41,7 +42,6 @@ class CircuitController extends Controller
             'zoom' => $request->zoom,
         ]);
 
-
         $images = $request->file('image');
         foreach ($images as  $image) {
             $image = $image->getClientOriginalName();
@@ -50,25 +50,26 @@ class CircuitController extends Controller
             ]);
         }
 
-
-        return back();
+        return redirect()->route('showMap', compact('circuit'));
     }
 
     public function path_post(Request $request)
     {
-        request()->validate([
-            'circuit_id' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
-        ]);
 
-        Path::create([
-            'circuit_id' => $request->circuit_id,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-        ]);
+        // request()->validate([
+        //     'circuit_id' => 'required',
+        //     'latitude' => 'required',
+        //     'longitude' => 'required',
+        // ]);
 
-        return back();
+        // Path::create([
+        //     'circuit_id' => $request->circuit_id,
+        //     'latitude' => $request->latitude,
+        //     'longitude' => $request->longitude,
+        // ]);
+        $data = $request->json()->all();
+
+        return response()->json($data);
     }
 
     public function buildign_post(Request $request)

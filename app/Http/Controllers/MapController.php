@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Circuit;
 use Illuminate\Http\Request;
 use GoogleMaps;
+
+use function PHPUnit\Framework\returnSelf;
 
 class MapController extends Controller
 {
 
-    public function showMap(Request $request)
+    public function showMap(Circuit $circuit)
     {
-        $latitude = 40.7128; // Example: New York City
-        $longitude = -74.0059;
-
-        return view('map', compact('latitude', 'longitude'));
+        return view('map', compact('circuit'));
     }
 }
