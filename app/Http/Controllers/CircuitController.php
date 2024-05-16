@@ -6,6 +6,7 @@ use App\Models\Buildign;
 use App\Models\Circuit;
 use App\Models\Path;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use SebastianBergmann\CodeCoverage\Report\Xml\BuildInformation;
 
 class CircuitController extends Controller
@@ -50,26 +51,40 @@ class CircuitController extends Controller
             ]);
         }
 
-        return redirect()->route('showMap', compact('circuit'));
+        return redirect()->route('circuit.index', compact('circuit'));
     }
 
     public function path_post(Request $request)
     {
-
-        // request()->validate([
-        //     'circuit_id' => 'required',
-        //     'latitude' => 'required',
-        //     'longitude' => 'required',
+        // ! method 1
+        // $validator = Validator::make($request->json()->all(), [
+        //     '*.circuit_id' => 'nullable|integer', // Adjust validation as needed
+        //     '*.latitude' => 'required|numeric|between:-90,90',
+        //     '*.longitude' => 'required|numeric|between:-180,180',
         // ]);
 
-        // Path::create([
-        //     'circuit_id' => $request->circuit_id,
-        //     'latitude' => $request->latitude,
-        //     'longitude' => $request->longitude,
-        // ]);
-        $data = $request->json()->all();
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors() . 'hahahahhahah', 422);
+        // }
 
-        return response()->json($data);
+        // ! method 2
+        $request->validate([
+            '*.circuit_id' => 'required',
+            '*.latitude' => 'required|numeric|between:-90,90',
+            '*.longitude' => 'required|numeric|between:-180,180',
+        ]);
+
+
+        $circuit = $request->json()->all();
+        foreach ($circuit as $path) {
+            Path::create([
+                'circuit_id' => $path['circuit_id'],
+                'latitude' => $path['latitude'],
+                'longitude' => $path['longitude'],
+            ]);
+        }
+
+        return response()->json(['route_to_building' => '/building/map/' . $circuit[0]['circuit_id']]);
     }
 
     public function buildign_post(Request $request)

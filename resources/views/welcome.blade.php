@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laravel</title>
-    @vite(['resources/js/app.js'])
-    @vite('resources/css/app.css')
-</head>
-
-<body>
+@extends('layout.app')
+@section('content')
     <h3>create the circuit</h3>
     <form action="{{ route('circuit.post') }}" method="post" enctype="multipart/form-data">
         @csrf
@@ -45,28 +34,6 @@
         <button>submit</button>
     </form>
 
-
-    <h3>add path for your circuit</h3>
-    <form action="{{ route('circuit.path_post') }}" method="post">
-        @csrf
-        <div>
-            <label for="">select your circuit</label>
-            <select name="circuit_id" id="">
-                @foreach ($circuits as $circuit)
-                    <option value="{{ $circuit->id }}">{{ $circuit->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div>
-            <label for="">latitude</label>
-            <input type="text" placeholder="latitude" name="latitude">
-        </div>
-        <div>
-            <label for="">longitude</label>
-            <input type="text" placeholder="longitude" name="longitude">
-        </div>
-        <button>submit</button>
-    </form>
 
     <h3>add buildings on that circuit</h3>
     <form action="{{ route('circuit.buildign_post') }}" method="post" enctype="multipart/form-data">
@@ -110,9 +77,7 @@
     <h1>imgs of circuit</h1>
     @if ($circuit)
         {{-- @foreach ($circuit->images as $image)
-            <span>{{ $image->path }}</span>
+        <span>{{ $image->path }}</span>
         @endforeach --}}
     @endif
-</body>
-
-</html>
+@endsection

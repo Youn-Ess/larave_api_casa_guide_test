@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button id="submit" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button id="submit" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
     submit circuit
 </button>
 
@@ -13,16 +13,40 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('circuit.path_post') }}" method="post">
+                <form action="{{ route('circuit.buildign_post') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="text" class="d-none" id="circuitId">
-                    <input type="text" class="d-none" id="circuitCordinates" name="circuitCordinates[]">
+                    <input type="text" class="d-none" id="circuit_id" name="circuit_id">
+                    <input type="text" class="d-none" id="building_latitude" name="latitude">
+                    <input type="text" class="d-none" id="building_longitude" name="longitude">
                     <div class="mb-5">
-                        <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
-                            name of circuit
-                        </label>
-                        <input type="text" id="circuitName" readonly placeholder="name"
-                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        <div>
+                            <label for="name" class=" block text-base font-medium text-[#07074D]">
+                                name of building
+                            </label>
+                            <input name="name" type="text" placeholder="name"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        </div>
+                        <div>
+                            <label for="name" class=" block text-base font-medium text-[#07074D]">
+                                description
+                            </label>
+                            <input name="description" type="text" placeholder="description"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        </div>
+                        <div>
+                            <label for="name" class=" block text-base font-medium text-[#07074D]">
+                                images
+                            </label>
+                            <input name="image" type="file" placeholder="description" multiple
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        </div>
+                        <div>
+                            <label for="name" class=" block text-base font-medium text-[#07074D]">
+                                audio
+                            </label>
+                            <input name="audio" type="text" placeholder="audio"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        </div>
                     </div>
 
                     <div class="modal-footer">
