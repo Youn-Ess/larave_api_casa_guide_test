@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('buildigns', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('circuit_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('circuit_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name');
             $table->string('description');
             $table->string('audio');

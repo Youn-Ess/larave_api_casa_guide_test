@@ -13,46 +13,32 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+
                 <form action="{{ route('circuit.buildign_post') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="text" class="d-none" id="circuit_id" name="circuit_id">
-                    <input type="text" class="d-none" id="building_latitude" name="latitude">
-                    <input type="text" class="d-none" id="building_longitude" name="longitude">
-                    <div class="mb-5">
-                        <div>
-                            <label for="name" class=" block text-base font-medium text-[#07074D]">
-                                name of building
-                            </label>
-                            <input name="name" type="text" placeholder="name"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                        </div>
-                        <div>
-                            <label for="name" class=" block text-base font-medium text-[#07074D]">
-                                description
-                            </label>
-                            <input name="description" type="text" placeholder="description"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                        </div>
-                        <div>
-                            <label for="name" class=" block text-base font-medium text-[#07074D]">
-                                images
-                            </label>
-                            <input name="image" type="file" placeholder="description" multiple
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                        </div>
-                        <div>
-                            <label for="name" class=" block text-base font-medium text-[#07074D]">
-                                audio
-                            </label>
-                            <input name="audio" type="text" placeholder="audio"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                        </div>
+                    <div>
+                        <label for="">name</label>
+                        <input type="text" placeholder="name" name="name">
                     </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">add</button>
+                    <div>
+                        <label for="">description</label>
+                        <input type="text" placeholder="description" name="description">
                     </div>
+                    <div>
+                        <label for="">audio</label>
+                        <input type="text" placeholder="audio" name="audio">
+                    </div>
+                    <div>
+                        <label for="">image</label>
+                        <input type="file" placeholder="image" multiple name="image[]">
+                    </div>
+                    <div class="d-none">
+                        <input type="text" id="latitude" placeholder="latitude" name="latitude">
+                    </div>
+                    <div class="d-none">
+                        <input type="text" id="longitude" placeholder="longitude" name="longitude">
+                    </div>
+                    <button>submit</button>
                 </form>
             </div>
         </div>

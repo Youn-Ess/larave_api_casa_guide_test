@@ -35,12 +35,13 @@
     </form>
 
 
-    <h3>add buildings on that circuit</h3>
-    <form action="{{ route('circuit.buildign_post') }}" method="post" enctype="multipart/form-data">
+    <h3>add buildings</h3>
+    {{-- <form action="{{ route('circuit.buildign_post') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div>
             <label for="">select your circuit</label>
             <select name="circuit_id" id="">
+                <option value="">none</option>
                 @foreach ($circuits as $circuit)
                     <option value="{{ $circuit->id }}">{{ $circuit->name }}</option>
                 @endforeach
@@ -71,5 +72,7 @@
             <input type="text" placeholder="longitude" name="longitude">
         </div>
         <button>submit</button>
-    </form>
+    </form> --}}
+
+    <a href="{{ route('building.index') }}">add</a>
 @endsection

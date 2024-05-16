@@ -84,13 +84,15 @@ class CircuitController extends Controller
             ]);
         }
 
-        return response()->json(['route_to_building' => '/building/map/' . $circuit[0]['circuit_id']]);
+
+
+        return response()->json(['route_to_building' => '/assign_building/map/' . $circuit[0]['circuit_id']]);
     }
 
     public function buildign_post(Request $request)
     {
         request()->validate([
-            'circuit_id' => 'required',
+            'circuit_id' => 'nullable',
             'name' => 'required',
             'description' => 'required',
             'audio' => 'required',
@@ -118,8 +120,29 @@ class CircuitController extends Controller
         return back();
     }
 
-    public function update_building(string $latitude)
+    public function assign_building(Buildign $buildign, Request $request)
     {
-        dd($latitude);
+        $buildign->update([
+            'circuit_id' => $request->circuit_id,
+        ]);
+        return back();
+    }
+
+    public function unassign_building(Request $request)
+    {
+
+        $building_id = $request->building_id;
+        $building = Buildign::where('id', $building_id)->first();
+        $building['circuit_id'] = null;
+        $building->save();
+        return back();
+    }
+
+    public function delete_building(Request $request)
+    {
+        $building_id = $request->building_id;
+        $building = Buildign::where('id', $building_id)->first();
+        $building->delete();
+        return back();
     }
 }

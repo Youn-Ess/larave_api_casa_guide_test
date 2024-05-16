@@ -18,6 +18,11 @@ class Buildign extends Model
         'longitude',
     ];
 
+    public function circuit()
+    {
+        return $this->belongsTo(Circuit::class);
+    }
+
     public function images(): MorphMany
     {
         return $this->morphMany(Image::class, 'imagable');
