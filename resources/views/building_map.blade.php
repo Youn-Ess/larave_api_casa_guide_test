@@ -4,8 +4,8 @@
     <div id="map" style="width: 100%; height: 400px;"></div>
     {{-- <button id="submit" class="border px-2 py-1 rounded-md test-[1.2rem] bg-gray-500 text-white">add circuit</button>
  --}}
-
-    @include('components.modal')
+    @include('partials.add_building_modal')
+    @include('partials.update_building_modal')
     <script type='text/javascript'
         src='https://maps.google.com/maps/api/js?language=en&key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&region=GB&libraries=directions'>
     </script>
@@ -29,8 +29,6 @@
                 lng: Number(building.lng),
             }
         })
-
-
 
         let markers = [];
 
@@ -65,7 +63,7 @@
                     map: map,
                 });
                 marker.addListener('click', function() {
-                    console.log(marker.position.lat());
+                    document.getElementById('update_building').click()
                 })
             });
 
@@ -91,7 +89,6 @@
                 document.getElementById('circuit_id').value = @json($id)
 
                 markers.push(marker);
-
             });
 
             // document.getElementById('submit').addEventListener('click', function() {

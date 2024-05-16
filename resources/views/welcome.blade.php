@@ -72,12 +72,4 @@
         </div>
         <button>submit</button>
     </form>
-
-
-    <h1>imgs of circuit</h1>
-    @if ($circuit)
-        {{-- @foreach ($circuit->images as $image)
-        <span>{{ $image->path }}</span>
-        @endforeach --}}
-    @endif
 @endsection

@@ -117,4 +117,9 @@ class CircuitController extends Controller
         }
         return back();
     }
+
+    public function update_building(string $latitude)
+    {
+        dd($latitude);
+    }
 }
